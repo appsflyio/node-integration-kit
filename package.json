@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appsflyio/devkit-nodejsutils.git"
+    "url": "https://github.com/appsflyio/node-integration-kit.git"
   },
   "author": "appsfly.io dba Dhurya Technologies Pvt Ltd",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
