@@ -17,7 +17,7 @@ AppInstance.prototype.exec = function(module_handle, intent, payload, userID) {
             data: payload
         };
         var payload = JSON.stringify(body) + "|" + module_handle + "|" + this.config.appKey + "|" + userID;
-        IntegrationKit.generateChecksum(payload, this.config.secret, function (err, checksum) {
+        IntegrationKit.generateChecksum(payload, this.config.secret, (err, checksum) => {
             if(!err){
                 request.post({
                     url:this.config.executorUrl + "/executor/exec",
@@ -29,7 +29,7 @@ AppInstance.prototype.exec = function(module_handle, intent, payload, userID) {
                         "X-Checksum":checksum,
                         "X-UUID":userID
                     }
-                }, function (err, resp, body) {
+                }, (err, resp, body) => {
                     if(err){
                         reject(err);
                     }
