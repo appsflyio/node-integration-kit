@@ -1,0 +1,20 @@
+{
+  "name": "node-integration-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appsflyio/devkit-nodejsutils.git"
+  },
+  "author": "appsfly.io dba Dhurya Technologies Pvt Ltd",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "dependencies": {
+    "jsonwebtoken": "^8.1.1",
+    "request": "^2.85.0",
+    "underscore": "^1.8.3"
+  }
+}
