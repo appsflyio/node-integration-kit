@@ -1,10 +1,10 @@
 "use strict";
 
-var request = require("request");
-var IntegrationKit = require("./integration").IntegrationKit;
+let request = require("request");
+let IntegrationKit = require("./integration").IntegrationKit;
 
 
-var AppInstance = function (config) {
+let AppInstance = function (config) {
     this.config = config;
     return this;
 };
@@ -12,15 +12,15 @@ var AppInstance = function (config) {
 AppInstance.prototype.exec = function(module_handle, intent, payload, userID) {
     userID = userID || "generic";
     return new Promise(function(resolve, reject) {
-        var body = {
+        let body = {
             intent: intent,
             data: payload
         };
-        var payload = JSON.stringify(body) + "|" + module_handle + "|" + this.config.appKey + "|" + userID;
+        let payload = JSON.stringify(body) + "|" + module_handle + "|" + this.config.appKey + "|" + userID;
         IntegrationKit.generateChecksum(payload, this.config.secret, (err, checksum) => {
             if(!err){
                 request.post({
-                    url:this.config.executorUrl + "/executor/exec",
+                    url:this.config.repoUrl + "/executor/exec",
                     method:"POST",
                     json:body,
                     headers:{
