@@ -4,7 +4,6 @@
 "use strict";
 
 var jsonwebtoken = require("jsonwebtoken");
-var _ = require("underscore");
 
 module.exports.IntegrationKit = {
     generateChecksum: function(data, key, cb) {
@@ -13,19 +12,19 @@ module.exports.IntegrationKit = {
             cb(undefined, token)
         });
     },
-    verifyChecksum: function(data, key, token) {
+    verifyChecksum: function(token, key, cb) {
         try {
-            let payload = {"af_claim": data};
-            return jsonwebtoken.verify(token, key, function (error, response) {
+            jsonwebtoken.verify(token, key, function (error, response) {
                 if(!error) {
                     if(response) {
-                        return _.isMatch(response,payload);
+                        cb(undefined,response.af_claim);
                     }
+                } else {
+                    cb(error);
                 }
-                return false;
             });
         } catch(error) {
-            return false;
+            cb(error);
         }
     }
 };

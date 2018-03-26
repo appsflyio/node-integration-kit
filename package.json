@@ -1,6 +1,6 @@
 {
   "name": "node-integration-kit",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,6 @@
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "dependencies": {
     "jsonwebtoken": "^8.1.1",
-    "request": "^2.85.0",
-    "underscore": "^1.8.3"
+    "request": "^2.85.0"
   }
 }
