@@ -1,4 +1,4 @@
 module.exports = {
-    integrationKit: require("./integration").IntegrationKit,
+    IntegrationKit: require("./integration").IntegrationKit,
     AppInstance: require("./AppInstance")
 };
