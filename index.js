@@ -22,36 +22,66 @@ class AppInstance {
                 intent: intent,
                 data: payload
             };
-            IntegrationKit.generateChecksum(body, this.config.secret, (err, checksum) => {
-                if(!err){
-                    request.post({
-                        url:this.config.repoUrl + "/executor/exec",
-                        method:"POST",
-                        json:checksum,
-                        headers:{
-                            "X-Module-Handle":module_handle,
-                            "X-App-Key":this.config.appKey,
-                            "X-UUID":userID
-                        }
-                    }, (err, resp, body) => {
-                        if(err){
-                            reject(err);
-                        }
-                        else{
-                            IntegrationKit.verifyChecksum(body, this.config.secret, (err, response) => {
-                                if(!err) {
-                                    resolve(response);
-                                }
-                            });
-                        }
-                    });
-                }
-                else{
-                    reject(err);
-                }
-            })
+            if(!this.config.secret){
+	            request.post({
+		            url:this.config.repoUrl + "/executor/exec",
+		            method:"POST",
+		            json:body,
+		            headers:{
+			            "X-Module-Handle":module_handle,
+			            "X-App-Key":this.config.appKey,
+			            "X-UUID":userID
+		            }
+	            }, function(error, response, body){
+	                if(response.statusCode >=400){
+		                reject(body.error);
+                    }
+                    else{
+		                resolve(body);
+                    }
+	            })
+
+            }
+            else{
+	            IntegrationKit.generateChecksum(body, this.config.secret, (err, data) => {
+		            if(!err){
+			            request({
+				            url:this.config.repoUrl + "/executor/exec",
+				            method:"POST",
+                            body:data,
+				            headers:{
+					            "X-Module-Handle":module_handle,
+					            "X-App-Key":this.config.appKey,
+					            "X-UUID":userID,
+					            "X-Encrypted":true
+				            }
+			            }, (err, response, body) => {
+				            if(response.statusCode >=400){
+					            reject(body);
+				            }
+				            else{
+					            IntegrationKit.verifyChecksum(body, this.config.secret, (err, response) => {
+						            if(!err) {
+							            resolve(response);
+						            }
+						            else{
+						                var checksumError = new Error();
+							            checksumError.message = "Checksum not verified";
+							            checksumError.code = 403;
+						                reject(checksumError);
+                                    }
+					            });
+				            }
+			            });
+		            }
+		            else{
+			            reject(err);
+		            }
+	            })
+
+            }
         });
     }
 }
 
-module.exports.AppInstance = AppInstance;
+module.exports = AppInstance
