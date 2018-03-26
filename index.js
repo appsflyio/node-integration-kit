@@ -25,7 +25,7 @@ AppInstance.prototype.exec = function(module_handle, intent, payload, userID) {
                 request.post({
                     url:this.config.repoUrl + "/executor/exec",
                     method:"POST",
-                    json:checksum,
+                    json:{"af_data":checksum},
                     headers:{
                         "X-Module-Handle":module_handle,
                         "X-App-Key":this.config.appKey,
