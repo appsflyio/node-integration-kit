@@ -18,7 +18,7 @@ let userID = "";
 let response = AppInstance.exec(module_handle, intent, payload, userID);
 console.log(response);*/
 
-let IntegrationKit = require("./integration").IntegrationKit;
+let IntegrationKit = require("./index").IntegrationKit;
 
 let appKey = "abb3f71c-a8cc-4f2a-90aa-23ac3771f5f7";
 let moduleHandle = "io.appsfly.msctpactivities";
