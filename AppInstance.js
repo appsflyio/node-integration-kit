@@ -23,12 +23,12 @@ AppInstance.prototype.exec = function(module_handle, intent, payload, userID) {
             intent: intent,
             data: payload
         };
-        IntegrationKit.generateChecksum(payload, this.config.secret, (err, checksum) => {
+        IntegrationKit.generateChecksum(body, this.config.secret, (err, checksum) => {
             if(!err){
                 request.post({
                     url:this.config.repoUrl + "/executor/exec",
                     method:"POST",
-                    json:{"af_data":checksum},
+                    json:checksum,
                     headers:{
                         "X-Module-Handle":module_handle,
                         "X-App-Key":this.config.appKey,
