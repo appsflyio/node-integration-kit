@@ -36,17 +36,17 @@ The SDK can be included to handle authorization. There is no need for you to han
 
 ##### Install
 
-`npm i appsflyio-nodejs-util --save`
+`npm i node-integration-kit --save`
 
 OR
 
-`npm install appsflyio-nodejs-util --save`
+`npm install node-integration-kit --save`
 
 
 ##### Configuration
 ```
-var appsflyioUtil = require("appsflyio-nodejs-util");
-var app = new appsflyioUtil.AppInstance({secret:"SECRET_KEY", appKey:"APP_KEY"});
+var nodeIntegrationKit = require("node-integration-kit");
+var app = new nodeIntegrationKit.AppInstance({secret:"SECRET_KEY", appKey:"APP_KEY"});
 ```  
 ##### Execution
 ```
@@ -72,17 +72,27 @@ POST
 | X-UUID | [UUID](#UUID) |
 | X-App-Key | [APP_KEY](#APP_KEY)|
 | X-Module-Handle | [MODULE_HANDLE](#MODULE_HANDLE)|
-| X-Checksum | CHECKSUM. Please go through [this gist](https://gist.github.com/prateektc/95e649649ee819b300914de76330369b) to generate checksum. |
-| Content-Type | Must be "application/json" |
+| X-Encrypted | BOOLEAN |
+| Content-Type | Must be "text/plain" |
 
-##### Body
+#### Body
+```
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZl9jbGFpbSI6IntcImludGVudFwiOlwiSU5URU5UXCIsXCJkYXRhXCI6XCJQQVlMT0FEXCJ9In0.ZPUfElCCO2FiSQwtur6t80kHFTOzsvnJGQ-j_70WZ0k
+```
+Body must have the encrypted checksum for the following JSON. Please use [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) to generate and verify checksum.
 [INTENT](#INTENT), [PAYLOAD](#PAYLOAD)
 ``` 
 {
   "intent":"INTENT",
   "data":"PAYLOAD"
- } 
+} 
+ ```
+Covert the above JSON to string and append it to key "af_claim" as follows:
+``` 
+{"af_claim": "{\"intent\":\"INTENT\", \"data\":\"PAYLOAD\"}"}
  ```
 
-##### Response
-Response format will be dependent on microservice. Please go through [this documentation](https://github.com/appsflyio/micro-module-documentations) for different microservices.
+----------------------------------------
+
+### Micro Service Response
+The response of the microservices is encrypted and you will be needing JWT decode or verify with the secret key to decode the response. After decode, the response is in "af_claim" key. Please go through [this documentation](https://github.com/appsflyio/micro-module-documentations) for different microservices.
