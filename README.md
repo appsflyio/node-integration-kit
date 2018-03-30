@@ -10,8 +10,7 @@ Please contact integrations@appsfly.io for your credientials.
 | Key | Description |
 | --- | --- |
 | SECRET_KEY   | Secret Key is required for encryption. Secret Key should be generated on the Appsfly publisher dashboard |
-| APP_KEY  | Application key to identify the publisher instance|
-| EXECUTOR_URL | Url to reach appsfly.io Microservices |
+| APP_KEY  | Application key to identify the publisher instance |
 
 **NOTE:** Above params are needed for checksum generation. Please refer to the methods mention below.
 
@@ -47,7 +46,7 @@ OR
 ##### Configuration
 ```
 var appsflyioUtil = require("appsflyio-nodejs-util");
-var app = new appsflyioUtil.AppInstance({executorUrl:"EXECUTOR_URL", secret:"SECRET_KEY", appKey:"APP_KEY"});
+var app = new appsflyioUtil.AppInstance({secret:"SECRET_KEY", appKey:"APP_KEY"});
 ```  
 ##### Execution
 ```
